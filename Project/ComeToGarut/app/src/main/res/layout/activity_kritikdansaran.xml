@@ -1,66 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.rohmatdasuki.cometogarut.kritikdansaran">
+    android:padding="10dp"
+    tools:context="com.example.rohmatdasuki.cometogarut.kritikdansaran"
+    android:orientation="vertical">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:text="KRITIK DAN SARAN"
-        android:textSize="30sp"
-        android:visibility="visible"
-        tools:layout_editor_absoluteX="61dp"
-        tools:layout_editor_absoluteY="3dp"
-        tools:ignore="MissingConstraints,UnknownId" />
-
-    <TextView
-        android:layout_width="63dp"
-        android:layout_height="30dp"
-        android:text="NAMA"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="51dp"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:layout_width="64dp"
-        android:layout_height="32dp"
-        android:text="EMAIL"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="92dp"
-        tools:ignore="MissingConstraints" />
-
-    <EditText
-        android:layout_width="273dp"
-        android:layout_height="36dp"
-        tools:layout_editor_absoluteX="81dp"
-        tools:layout_editor_absoluteY="51dp"
-        tools:ignore="MissingConstraints" />
-
-    <EditText
-        android:layout_width="273dp"
-        android:layout_height="36dp"
-        tools:layout_editor_absoluteX="81dp"
-        tools:layout_editor_absoluteY="92dp"
-        tools:ignore="MissingConstraints" />
-
-    <EditText
-        android:layout_width="358dp"
-        android:layout_height="220dp"
-        tools:layout_editor_absoluteX="13dp"
-        tools:layout_editor_absoluteY="210dp"
-        tools:ignore="MissingConstraints" />
-
-    <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="461dp"
-        android:text="Confirm"
-        android:textAlignment="center"
-        tools:ignore="MissingConstraints" />
+        android:text="KRITIK DAN SARAN"
+        android:textAppearance="?android:textAppearanceLarge"
+        android:textAlignment="center"/>
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".30"
+            android:text="Nama"
+            android:textAppearance="?android:textAppearanceMedium" />
+
+        <EditText
+            android:id="@+id/name"
+            android:layout_width="0dp"
+            android:layout_weight=".70"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight=".30"
+            android:layout_height="wrap_content"
+            android:text="Email"
+            android:textAppearance="?android:textAppearanceMedium" />
+
+        <EditText
+            android:id="@+id/email"
+            android:layout_width="0dp"
+            android:layout_weight=".70"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Confirm"
+        android:layout_gravity="center"
+        android:textAlignment="center" />
+
+</LinearLayout>

@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">cometogarut</string>
+    <string name="title">Title</string>
+    <string name="address">Address</string>
+    <string name="price">Harga Tiket</string>
+    <string name="time">Waktu Buka</string>
+    <string name="facility">Fasilitas</string>
+    <string name="desc">Description</string>
+    <string name="contact">Kontak</string>
+    <string name="cleanliness">Kebersihan</string>
+    <string name="security">Keamanan</string>
+    <string name="order">Ketertiban</string>
+    <string name="send_rev">Kirim Review</string>
 </resources>
