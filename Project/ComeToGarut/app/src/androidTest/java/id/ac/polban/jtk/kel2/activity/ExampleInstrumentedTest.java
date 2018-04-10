@@ -1,4 +1,4 @@
-package com.example.rohmatdasuki.cometogarut;
+package id.ac.polban.jtk.kel2.activity;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

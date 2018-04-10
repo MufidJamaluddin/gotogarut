@@ -4,10 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    android:padding="5dp">
+    android:padding="5dp"
+    android:id="@+id/item_search">
 
     <ImageView
-        android:id="@+id/photo"
+        android:id="@+id/item_photo"
         android:layout_width="0dp"
         android:layout_weight=".30"
         android:layout_height="wrap_content"
@@ -21,23 +22,18 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/item_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/title"
             android:textAppearance="?android:textAppearanceMedium"/>
 
         <TextView
-            android:id="@+id/search"
+            android:id="@+id/item_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:textAppearanceMedium"
             android:text="@string/desc" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/title"/>
 
     </LinearLayout>
 
