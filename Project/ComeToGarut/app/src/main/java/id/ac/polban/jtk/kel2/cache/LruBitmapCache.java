@@ -20,9 +20,9 @@ public class LruBitmapCache extends LruCache<String, Bitmap> implements ImageLoa
         return cacheSize;
     }
 
-    public LruBitmapCache() {
-
-        this(getDefaultLruCacheSize());
+    public LruBitmapCache()
+    {
+        super(getDefaultLruCacheSize());
     }
 
     public LruBitmapCache(int sizeInKiloBytes)

@@ -1,7 +1,7 @@
 package id.ac.polban.jtk.kel2.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 public class PlaceActivity extends AppCompatActivity
 {

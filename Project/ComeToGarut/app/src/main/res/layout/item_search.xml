@@ -7,12 +7,11 @@
     android:padding="5dp"
     android:id="@+id/item_search">
 
-    <ImageView
+    <com.android.volley.toolbox.NetworkImageView
         android:id="@+id/item_photo"
         android:layout_width="0dp"
         android:layout_weight=".30"
         android:layout_height="wrap_content"
-        android:src="@mipmap/ic_launcher"
         android:contentDescription="@string/title" />
 
     <LinearLayout

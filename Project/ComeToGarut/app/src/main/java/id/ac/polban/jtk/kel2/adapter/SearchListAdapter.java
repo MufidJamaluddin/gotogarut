@@ -1,6 +1,7 @@
 package id.ac.polban.jtk.kel2.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -9,6 +10,7 @@ import com.android.volley.toolbox.NetworkImageView;
 
 import java.util.List;
 
+import id.ac.polban.jtk.kel2.activity.PlaceActivity;
 import id.ac.polban.jtk.kel2.activity.R;
 import id.ac.polban.jtk.kel2.models.TempatWisata;
 
@@ -25,7 +27,7 @@ public class SearchListAdapter extends ListAdapter<TempatWisata>
     {
         TextView title = view.findViewById(R.id.item_title);
         TextView desc = view.findViewById(R.id.item_description);
-        NetworkImageView photo = (NetworkImageView) view.findViewById(R.id.item_photo);
+        NetworkImageView photo = view.findViewById(R.id.item_photo);
 
         title.setText(data.getNama_tempat());
         desc.setText(data.getDeskripsi());
@@ -39,7 +41,12 @@ public class SearchListAdapter extends ListAdapter<TempatWisata>
             @Override
             public void onClick(View view)
             {
+                TextView titleV = view.findViewById(R.id.item_title);
+                Intent intent = new Intent(SearchListAdapter.super.activity, PlaceActivity.class);
 
+                intent.putExtra("Title",titleV.getText());
+
+                SearchListAdapter.super.activity.startActivity(intent);
             }
 
         });
