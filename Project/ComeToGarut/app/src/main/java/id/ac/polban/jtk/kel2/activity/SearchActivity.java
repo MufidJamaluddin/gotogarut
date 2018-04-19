@@ -4,21 +4,19 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,30 +24,26 @@ import id.ac.polban.jtk.kel2.adapter.SearchListAdapter;
 import id.ac.polban.jtk.kel2.controllers.SearchController;
 import id.ac.polban.jtk.kel2.models.TempatWisata;
 
-public class SearchActivity extends AppCompatActivity
-{
+public class SearchActivity extends AppCompatActivity {
     // Log Tag
     private static final String TAG = SearchActivity.class.getSimpleName();
 
     // JSON Url dari Internet
-    private static final String URL = "http://feduniverse.com/index.php/api/";
+    private static final String URL = "http://cometogarut.feduniverse.com/index.php/api/";
 
     private ProgressDialog progressDialog;
 
     private List<TempatWisata> listTempatWisata;
 
-    private void hideProgressDialog()
-    {
-        if(this.progressDialog != null)
-        {
+    private void hideProgressDialog() {
+        if (this.progressDialog != null) {
             this.progressDialog.dismiss();
             this.progressDialog = null;
         }
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pencarian);
 
@@ -71,104 +65,85 @@ public class SearchActivity extends AppCompatActivity
 
         JSONArray param = new JSONArray();
 
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.POST, URL, param, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, URL, param, response -> {
+            Log.d(TAG, response.toString());
+            hideProgressDialog();
 
-            @Override
-            public void onResponse(JSONArray response)
+            for (int i = 0; i < response.length(); i++)
             {
-                Log.d(TAG, response.toString());
-                hideProgressDialog();
-
-                for(int i=0; i<response.length(); i++)
+                try
                 {
-                    try
-                    {
-                        JSONObject jsonObject = response.getJSONObject(i);
-                        TempatWisata tempatWisata = new TempatWisata();
+                    JSONObject jsonObject = response.getJSONObject(i);
+                    TempatWisata tempatWisata = new TempatWisata();
 
-                        tempatWisata.setNama_tempat(jsonObject.getString("nama_tempat"));
-                        tempatWisata.setAlamat(jsonObject.getString("alamat"));
-                        tempatWisata.setDeskripsi(jsonObject.getString("deskripsi"));
+                    tempatWisata.setNama_tempat(jsonObject.getString("nama_tempat"));
+                    tempatWisata.setAlamat(jsonObject.getString("alamat"));
+                    tempatWisata.setDeskripsi(jsonObject.getString("deskripsi"));
+                    tempatWisata.setUrl_photo(new URI(jsonObject.getString("link_photo")));
 
-                        listTempatWisata.add(tempatWisata);
-                    }
-                    catch (Exception e)
-                    {
-                        e.printStackTrace();
-                    }
+                    listTempatWisata.add(tempatWisata);
                 }
-
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
             }
 
-        }, new Response.ErrorListener(){
+            listAdapterTWisata.notifyDataSetChanged();
 
-            @Override
-            public void onErrorResponse(VolleyError error)
-            {
-                VolleyLog.d(TAG, "Error : " + error);
-                Toast.makeText(SearchActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
-                hideProgressDialog();
-            }
-
+        }, error -> {
+            VolleyLog.d(TAG, "Error : " + error);
+            Toast.makeText(SearchActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
+            hideProgressDialog();
         });
 
         SearchController.getInstance().addToRequestQueue(jsonArrayRequest);
 
-        searchBtn.setOnClickListener(new View.OnClickListener()
-        {
+        searchBtn.setOnClickListener(view -> {
             EditText itemSearchV = findViewById(R.id.search_title);
-            String itemSearch = itemSearchV.getText().toString();
+            String itemSearch = itemSearchV.getText().toString().replace(" ", "%");
 
-            @Override
-            public void onClick(View view)
+            JSONArray param1 = new JSONArray();
+
+            if(!itemSearch.matches(""))
             {
-                progressDialog.show();
+                JsonArrayRequest searchRequest = new JsonArrayRequest(Request.Method.GET, URL.concat("get/").concat(itemSearch), param1, searchResponse -> {
+                    Log.d(TAG, searchResponse.toString());
+                    hideProgressDialog();
 
-                JSONArray param = new JSONArray();
+                    listTempatWisata.removeAll(listTempatWisata);
 
-                JsonArrayRequest searchRequest = new JsonArrayRequest(Request.Method.POST, URL.concat("get/").concat(itemSearch), param, new Response.Listener<JSONArray>() {
-
-                    @Override
-                    public void onResponse(JSONArray searchResponse)
+                    for (int i = 0; i < searchResponse.length(); i++)
                     {
-                        Log.d(TAG, searchResponse.toString());
-                        hideProgressDialog();
-
-                        for(int i=0; i<searchResponse.length(); i++)
+                        try
                         {
-                            try
-                            {
-                                JSONObject jsonObject = searchResponse.getJSONObject(i);
-                                TempatWisata wisata = new TempatWisata();
+                            JSONObject jsonObject = searchResponse.getJSONObject(i);
+                            TempatWisata wisata = new TempatWisata();
 
-                                wisata.setNama_tempat(jsonObject.getString("nama_tempat"));
-                                wisata.setAlamat(jsonObject.getString("alamat"));
-                                wisata.setDeskripsi(jsonObject.getString("deskripsi"));
+                            wisata.setNama_tempat(jsonObject.getString("nama_tempat"));
+                            wisata.setAlamat(jsonObject.getString("alamat"));
+                            wisata.setDeskripsi(jsonObject.getString("deskripsi"));
+                            wisata.setUrl_photo(new URI(jsonObject.getString("link_photo")));
 
-                                listTempatWisata.add(wisata);
-                            }
-                            catch (Exception e)
-                            {
-                                e.printStackTrace();
-                            }
+                            listTempatWisata.add(wisata);
                         }
-
+                        catch (Exception e)
+                        {
+                            e.printStackTrace();
+                        }
                     }
 
-                }, new Response.ErrorListener(){
+                    listAdapterTWisata.notifyDataSetChanged();
 
-                    @Override
-                    public void onErrorResponse(VolleyError error)
-                    {
-                        VolleyLog.d(TAG, "Error : " + error);
-                        Toast.makeText(SearchActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
-                        hideProgressDialog();
-                    }
-
+                }, error -> {
+                    VolleyLog.d(TAG, "Error : " + error);
+                    Toast.makeText(SearchActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
+                    hideProgressDialog();
                 });
 
                 SearchController.getInstance().addToRequestQueue(searchRequest);
             }
+
         });
 
     }
