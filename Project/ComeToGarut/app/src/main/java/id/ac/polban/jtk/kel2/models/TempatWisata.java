@@ -4,12 +4,24 @@ import java.net.URI;
 
 public class TempatWisata
 {
+    private Integer id_tempat;
     private String nama_tempat;
     private String alamat;
     private String deskripsi;
     private URI url_photo;
 
-    public String getNama_tempat() {
+    public Integer getId_tempat()
+    {
+        return id_tempat;
+    }
+
+    public void setId_tempat(Integer id_tempat)
+    {
+        this.id_tempat = id_tempat;
+    }
+
+    public String getNama_tempat()
+    {
         return nama_tempat;
     }
 

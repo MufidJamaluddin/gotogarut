@@ -35,15 +35,18 @@ public class SearchActivity extends AppCompatActivity {
 
     private List<TempatWisata> listTempatWisata;
 
-    private void hideProgressDialog() {
-        if (this.progressDialog != null) {
+    private void hideProgressDialog()
+    {
+        if (this.progressDialog != null)
+        {
             this.progressDialog.dismiss();
             this.progressDialog = null;
         }
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pencarian);
 
@@ -76,6 +79,7 @@ public class SearchActivity extends AppCompatActivity {
                     JSONObject jsonObject = response.getJSONObject(i);
                     TempatWisata tempatWisata = new TempatWisata();
 
+                    tempatWisata.setId_tempat(jsonObject.getInt("id_tempat"));
                     tempatWisata.setNama_tempat(jsonObject.getString("nama_tempat"));
                     tempatWisata.setAlamat(jsonObject.getString("alamat"));
                     tempatWisata.setDeskripsi(jsonObject.getString("deskripsi"));

@@ -59,6 +59,7 @@ public class SearchListAdapter extends ArrayAdapter<TempatWisata>
             Intent intent = new Intent(super.getContext(), PlaceActivity.class);
 
             intent.putExtra("Title",titleV.getText());
+            intent.putExtra("id_tempat", data.getId_tempat());
 
             super.getContext().startActivity(intent);
         });

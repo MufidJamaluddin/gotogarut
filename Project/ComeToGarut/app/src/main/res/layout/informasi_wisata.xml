@@ -8,14 +8,13 @@
     android:orientation="vertical"
     tools:context=".PlaceActivity">
 
-    <ImageView
+    <com.android.volley.toolbox.NetworkImageView
         android:id="@+id/photo"
         android:layout_width="match_parent"
         android:layout_height="250dp"
         app:srcCompat="@android:drawable/btn_dialog"
         android:scaleType="centerCrop"
-        android:contentDescription="@string/title">
-    </ImageView>
+        android:contentDescription="@string/title"/>
 
     <TextView
         android:layout_height="wrap_content"
@@ -176,11 +175,32 @@
         android:padding="2dp"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
 
-    <Button
-        android:id="@+id/show_gallery"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/view_gallery"
-        android:layout_gravity="center" />
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/show_gallery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/view_gallery"
+            android:layout_gravity="center" />
+
+        <Button
+            android:id="@+id/show_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rating"
+            android:layout_gravity="center" />
+
+        <Button
+            android:id="@+id/show_masukkan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Masukan"
+            android:layout_gravity="center" />
+
+    </LinearLayout>
 
 </LinearLayout>
