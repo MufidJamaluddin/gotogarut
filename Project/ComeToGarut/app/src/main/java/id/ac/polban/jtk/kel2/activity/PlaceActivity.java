@@ -22,7 +22,7 @@ public class PlaceActivity extends AppCompatActivity
 {
     private static final String TAG = PlaceActivity.class.getSimpleName();
 
-    private static final String URL = "http://cometogarut.feduniverse.com/index.php/api/get/";
+    private static final String URL = "http://cometogarut.gaetcita.com/index.php/api/get/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -70,7 +70,7 @@ public class PlaceActivity extends AppCompatActivity
             }
         });
 
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, URL.concat(nama_tempat.replace(" ", "%")), new JSONArray(), (JSONArray response) -> {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, URL.concat(nama_tempat.replace(" ", "%25")), new JSONArray(), (JSONArray response) -> {
             Log.d(TAG, response.toString());
             try
             {

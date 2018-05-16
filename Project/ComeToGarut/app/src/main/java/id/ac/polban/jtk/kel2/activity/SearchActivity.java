@@ -29,7 +29,7 @@ public class SearchActivity extends AppCompatActivity {
     private static final String TAG = SearchActivity.class.getSimpleName();
 
     // JSON Url dari Internet
-    private static final String URL = "http://cometogarut.feduniverse.com/index.php/api/";
+    private static final String URL = "http://cometogarut.gaetcita.com/index.php/api/";
 
     private ProgressDialog progressDialog;
 
@@ -105,7 +105,7 @@ public class SearchActivity extends AppCompatActivity {
 
         searchBtn.setOnClickListener(view -> {
             EditText itemSearchV = findViewById(R.id.search_title);
-            String itemSearch = itemSearchV.getText().toString().replace(" ", "%");
+            String itemSearch = itemSearchV.getText().toString().replace(" ", "%25");
 
             JSONArray param1 = new JSONArray();
 
