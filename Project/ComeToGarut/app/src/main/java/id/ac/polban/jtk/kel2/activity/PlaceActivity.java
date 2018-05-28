@@ -10,19 +10,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
-import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.lang.ref.WeakReference;
+import java.net.URI;
+
 import id.ac.polban.jtk.kel2.controllers.SearchController;
+import id.ac.polban.jtk.kel2.models.DetailTempatWisata;
 
 public class PlaceActivity extends AppCompatActivity
 {
     private static final String TAG = PlaceActivity.class.getSimpleName();
 
-    private static final String URL = "http://cometogarut.gaetcita.com/index.php/api/get/";
+    private static final String URL = "http://cometogarut.gaetcita.com/index.php/jsonapi/TempatWisata/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -33,11 +36,13 @@ public class PlaceActivity extends AppCompatActivity
         Integer id_tempat = super.getIntent().getIntExtra("id_tempat",1);
         String nama_tempat = super.getIntent().getStringExtra("Title");
 
+        DetailTempatWisata detailTempatWisata = new DetailTempatWisata();
+
         NetworkImageView photoV = super.findViewById(R.id.photo);
         TextView titleV = super.findViewById(R.id.item_title);
         TextView addressV = super.findViewById(R.id.address);
         TextView priceV = super.findViewById(R.id.price);
-        TextView timeV = super.findViewById(R.id.time);
+        //TextView timeV = super.findViewById(R.id.time);
         TextView facilityV = super.findViewById(R.id.facility);
         TextView description = super.findViewById(R.id.description);
         TextView contactV = super.findViewById(R.id.contact);
@@ -70,34 +75,38 @@ public class PlaceActivity extends AppCompatActivity
             }
         });
 
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, URL.concat(nama_tempat.replace(" ", "%25")), new JSONArray(), (JSONArray response) -> {
-            Log.d(TAG, response.toString());
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, URL.concat(id_tempat.toString()), new JSONObject(), (JSONObject jsonObject) -> {
+            Log.d(TAG, jsonObject.toString());
             try
             {
-                JSONObject jsonObject = response.getJSONObject(0);
+                detailTempatWisata.setNama_tempat(jsonObject.getString("nama_tempat"));
+                detailTempatWisata.setAlamat(jsonObject.getString("alamat"));
+                detailTempatWisata.setHarga(jsonObject.getString("harga"));
+                detailTempatWisata.setDeskripsi(jsonObject.getString("deskripsi"));
+                detailTempatWisata.setKontak(jsonObject.getString("kontak"));
+                detailTempatWisata.setFasilitas(jsonObject.getString("fasilitas"));
+                detailTempatWisata.setUrl_photo(new URI(jsonObject.getString("link_photo")));
 
-                titleV.setText(jsonObject.getString("nama_tempat"));
-                addressV.setText(jsonObject.getString("alamat"));
-                priceV.setText(jsonObject.getString("harga"));
-                timeV.setText(jsonObject.getString("jam_kunjungan"));
-                description.setText(jsonObject.getString("deskripsi"));
-                contactV.setText(jsonObject.getString("kontak"));
-                facilityV.setText(jsonObject.getString("fasilitas"));
-                //detailTempatWisata.setLatitude(jsonObject.getString("latitude"));
-                //detailTempatWisata.setLongitude(jsonObject.getString("longitude"));
-                photoV.setImageUrl(jsonObject.getString("link_photo"), SearchController.getInstance().getImageLoader());
+                photoV.setImageUrl(detailTempatWisata.getUrl_photo().toString(), SearchController.getInstance().getImageLoader());
+                titleV.setText(detailTempatWisata.getNama_tempat() + "");
+                addressV.setText(detailTempatWisata.getAlamat() + "");
+                priceV.setText(detailTempatWisata.getHarga() + "");
+                facilityV.setText(detailTempatWisata.getFasilitas() + "");
+                description.setText(detailTempatWisata.getDeskripsi() + "");
+                contactV.setText(detailTempatWisata.getHarga() + "");
             }
             catch(Exception e)
             {
-                Log.d(TAG, e.getMessage());
+                Log.d(TAG, "Error : " + e.getMessage());
+                e.printStackTrace();
             }
 
         }, error -> {
-            Log.d(TAG,error.getMessage());
+            Log.d(TAG, "Error : " + error.getMessage());
             Toast.makeText(PlaceActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
         });
 
-        SearchController.getInstance().addToRequestQueue(jsonArrayRequest);
+        SearchController.getInstance().addToRequestQueue(jsonObjectRequest);
 
     }
 }

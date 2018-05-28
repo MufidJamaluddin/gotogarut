@@ -124,6 +124,7 @@ public class SearchActivity extends AppCompatActivity {
                             JSONObject jsonObject = searchResponse.getJSONObject(i);
                             TempatWisata wisata = new TempatWisata();
 
+                            wisata.setId_tempat(Integer.parseInt(jsonObject.getString("id_tempat")));
                             wisata.setNama_tempat(jsonObject.getString("nama_tempat"));
                             wisata.setAlamat(jsonObject.getString("alamat"));
                             wisata.setDeskripsi(jsonObject.getString("deskripsi"));
